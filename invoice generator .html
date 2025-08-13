@@ -14,7 +14,6 @@
         .invoice-box {
             max-width: 850px;
             margin: auto;
-            padding: 2.5rem;
             border: 1px solid #e5e7eb;
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
             font-size: 16px;
@@ -87,10 +86,9 @@
 </head>
 <body class="bg-gray-100 p-4 sm:p-8">
 
-    <div class="invoice-box bg-white rounded-xl" id="invoice-container">
+    <div class="invoice-box bg-white rounded-xl p-6 sm:p-10" id="invoice-container">
         <div class="paid-stamp">Paid</div>
-        <!-- Header -->
-        <header class="flex justify-between items-start pb-8 border-b border-gray-200">
+        <header class="flex flex-col sm:flex-row justify-between items-start pb-8 border-b border-gray-200">
             <div class="flex items-center gap-4">
                 <div class="bg-gray-200 w-20 h-20 rounded-lg flex items-center justify-center cursor-pointer" id="logo-container" title="Click to upload logo">
                     <img id="logo-img" src="" alt="Logo" class="hidden h-full w-full object-contain">
@@ -98,21 +96,20 @@
                     <input type="file" id="logo-upload" class="hidden" accept="image/*">
                 </div>
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900" contenteditable="true">Your Company</h1>
-                    <p contenteditable="true" class="text-sm">123 Your Street, Your City, ST 12345</p>
-                    <p contenteditable="true" class="text-sm">your.email@example.com</p>
+                    <h1 class="text-3xl font-bold text-gray-900" contenteditable="true" id="company-name">Your Company</h1>
+                    <p contenteditable="true" class="text-sm" id="company-address">123 Your Street, Your City, ST 12345</p>
+                    <p contenteditable="true" class="text-sm" id="company-email">your.email@example.com</p>
                 </div>
             </div>
-            <div class="text-right">
+            <div class="text-left sm:text-right w-full sm:w-auto mt-6 sm:mt-0">
                 <h2 class="text-4xl font-bold text-gray-800 tracking-tight">INVOICE</h2>
-                <p class="mt-2">#<span contenteditable="true">123</span></p>
+                <p class="mt-2">#<span contenteditable="true" id="invoice-number"></span></p>
                 <p>Date: <span contenteditable="true" id="invoice-date"></span></p>
                 <p>Due Date: <span contenteditable="true" id="due-date"></span></p>
             </div>
         </header>
 
-        <!-- Client Info -->
-        <section class="flex justify-between mt-8">
+        <section class="flex flex-col-reverse sm:flex-row justify-between mt-8">
             <div id="client-info">
                 <h3 class="font-semibold text-gray-800">Bill To:</h3>
                 <p contenteditable="true" id="client-company">Client Company Name</p>
@@ -120,41 +117,40 @@
                 <p contenteditable="true" id="client-address">456 Client Address, Client City, ST 67890</p>
                 <p contenteditable="true" id="client-email">client.email@example.com</p>
             </div>
-            <div class="text-right no-print">
+            <div class="text-left sm:text-right no-print mb-6 sm:mb-0 w-full sm:w-auto">
                 <label for="client-select" class="block text-sm font-medium text-gray-700">Saved Clients</label>
                 <select id="client-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                     <option>Select a client</option>
                 </select>
-                <div class="mt-2 flex gap-2 justify-end">
+                <div class="mt-2 flex gap-2 justify-start sm:justify-end">
                     <button id="save-client" class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">Save</button>
                     <button id="delete-client" class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded hover:bg-red-200">Delete</button>
                 </div>
             </div>
         </section>
 
-        <!-- Invoice Items Table -->
         <section class="mt-10">
-            <table class="w-full text-left" id="invoice-table">
-                <thead>
-                    <tr class="table-header">
-                        <th class="p-3 rounded-l-lg">Description</th>
-                        <th class="p-3 text-center w-24">Hours</th>
-                        <th class="p-3 text-right w-32">Rate</th>
-                        <th class="p-3 text-right w-32">Total</th>
-                        <th class="p-3 text-center w-12 rounded-r-lg no-print"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Rows will be added dynamically here -->
-                </tbody>
-            </table>
+             <div class="overflow-x-auto">
+                <table class="w-full text-left" id="invoice-table">
+                    <thead>
+                        <tr class="table-header">
+                            <th class="p-3 rounded-l-lg">Description</th>
+                            <th class="p-3 text-center w-24">Hours</th>
+                            <th class="p-3 text-right w-32">Rate</th>
+                            <th class="p-3 text-right w-32">Total</th>
+                            <th class="p-3 text-center w-12 rounded-r-lg no-print"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
             <button id="add-row" class="mt-4 text-sm font-semibold text-indigo-600 hover:text-indigo-800 no-print flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                 Add Item
             </button>
         </section>
 
-        <!-- Totals -->
         <section class="flex justify-end mt-8">
             <div class="w-full max-w-sm">
                 <div class="flex justify-between py-1">
@@ -172,7 +168,6 @@
             </div>
         </section>
 
-        <!-- Notes -->
         <section class="mt-12">
             <h4 class="font-semibold text-gray-800">Notes:</h4>
             <p class="text-sm text-gray-600" contenteditable="true" id="notes">
@@ -180,9 +175,9 @@
             </p>
         </section>
         
-        <!-- Action Buttons -->
         <footer class="mt-12 pt-8 border-t border-gray-200 text-center no-print">
-            <div class="flex justify-center gap-4">
+            <div class="flex justify-center gap-4 flex-wrap">
+                <button id="new-invoice-btn" class="action-button bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-yellow-700 shadow-md">New Invoice</button>
                 <button id="import-btn" class="action-button bg-gray-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-700 shadow-md">Import Data</button>
                 <button id="export-btn" class="action-button bg-gray-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-700 shadow-md">Export Data</button>
                 <button id="paid-btn" class="action-button bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 shadow-md">Mark as Paid</button>
@@ -203,20 +198,22 @@
         const clientSelect = document.getElementById('client-select');
         const invoiceContainer = document.getElementById('invoice-container');
 
-        // --- Initial State & Setup ---
-        const state = {
-            clients: {},
-            invoiceItems: [
-                { desc: 'Standard Computer Usage', hours: 8, rate: 50 },
-                { desc: 'Software License Rental (Suite A)', hours: 1, rate: 150 },
-                { desc: 'Data Processing & Analysis', hours: 5.5, rate: 75 }
-            ]
-        };
+        // --- State Management ---
+        let state = { clients: {} };
 
-        // --- Core Functions ---
+        const debounce = (func, delay) => {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), delay);
+            };
+        };
+        
+        // --- Core Calculation Functions ---
         const calculateRowTotal = (row) => {
             const hours = parseFloat(row.querySelector('.hours').textContent) || 0;
-            const rate = parseFloat(row.querySelector('.rate').textContent) || 0;
+            const rateText = row.querySelector('.rate').textContent.replace(/[^0-9.-]+/g,"");
+            const rate = parseFloat(rateText) || 0;
             const total = hours * rate;
             row.querySelector('.total').textContent = '$' + total.toFixed(2);
             return total;
@@ -234,13 +231,15 @@
             subtotalEl.textContent = '$' + subtotal.toFixed(2);
             taxAmountEl.textContent = '$' + taxAmount.toFixed(2);
             grandTotalEl.textContent = '$' + (subtotal + taxAmount).toFixed(2);
+            debouncedSaveState();
         };
 
+        // --- Row & Item Management ---
         const createInvoiceRow = (item) => {
             const newRow = document.createElement('tr');
             newRow.className = 'border-b border-gray-200';
             newRow.innerHTML = `
-                <td class="p-3"><div contenteditable="true">${item.desc}</div></td>
+                <td class="p-3"><div contenteditable="true" class="desc">${item.desc}</div></td>
                 <td class="p-3 text-center"><div contenteditable="true" class="hours">${item.hours}</div></td>
                 <td class="p-3 text-right">$<span contenteditable="true" class="rate">${item.rate.toFixed(2)}</span></td>
                 <td class="p-3 text-right font-semibold total">$0.00</td>
@@ -251,14 +250,9 @@
                 </td>
             `;
             invoiceTableBody.appendChild(newRow);
+            return newRow;
         };
 
-        const renderInvoiceItems = () => {
-            invoiceTableBody.innerHTML = '';
-            state.invoiceItems.forEach(createInvoiceRow);
-            calculateGrandTotal();
-        };
-        
         // --- Client Management ---
         const loadClients = () => {
             const savedClients = localStorage.getItem('invoiceClients');
@@ -274,7 +268,7 @@
 
         const saveClient = () => {
             const clientName = document.getElementById('client-company').textContent.trim();
-            if (!clientName) {
+            if (!clientName || clientName === 'Client Company Name') {
                 alert('Please enter a client company name to save.');
                 return;
             }
@@ -289,7 +283,7 @@
             clientSelect.value = clientName;
             alert(`Client "${clientName}" saved!`);
         };
-
+        
         const deleteClient = () => {
             const clientName = clientSelect.value;
             if (clientName && clientName !== 'Select a client') {
@@ -302,7 +296,7 @@
                 alert('Please select a client to delete.');
             }
         };
-        
+
         const selectClient = (e) => {
             const clientName = e.target.value;
             const client = state.clients[clientName];
@@ -314,37 +308,107 @@
             }
         };
 
-        // --- Data Import/Export ---
-        const exportData = () => {
+        // --- Invoice Number Management ---
+        const generateNewInvoiceNumber = () => {
+            let counter = parseInt(localStorage.getItem('invoiceCounter') || '0');
+            counter++;
+            const newInvoiceNumber = `INV-${new Date().getFullYear()}-${String(counter).padStart(4, '0')}`;
+            localStorage.setItem('invoiceCounter', counter);
+            return newInvoiceNumber;
+        };
+
+        // --- State Persistence (Save/Load/Import/Export) ---
+        const getState = () => {
             const currentItems = [];
             invoiceTableBody.querySelectorAll('tr').forEach(row => {
                 currentItems.push({
-                    desc: row.cells[0].textContent,
+                    desc: row.querySelector('.desc').textContent,
                     hours: parseFloat(row.querySelector('.hours').textContent) || 0,
                     rate: parseFloat(row.querySelector('.rate').textContent) || 0,
                 });
             });
 
-            const dataToExport = {
+            return {
+                companyInfo: {
+                    name: document.getElementById('company-name').textContent,
+                    address: document.getElementById('company-address').textContent,
+                    email: document.getElementById('company-email').textContent,
+                },
                 clientInfo: {
                     company: document.getElementById('client-company').textContent,
                     name: document.getElementById('client-name').textContent,
                     address: document.getElementById('client-address').textContent,
                     email: document.getElementById('client-email').textContent,
                 },
+                invoiceNumber: document.getElementById('invoice-number').textContent,
+                invoiceDate: document.getElementById('invoice-date').textContent,
+                dueDate: document.getElementById('due-date').textContent,
                 invoiceItems: currentItems,
                 taxRate: document.getElementById('tax-rate').textContent,
                 notes: document.getElementById('notes').textContent,
                 isPaid: invoiceContainer.classList.contains('is-paid'),
                 logo: document.getElementById('logo-img').src,
             };
+        };
 
+        const setState = (data) => {
+            // Company Info
+            document.getElementById('company-name').textContent = data.companyInfo.name;
+            document.getElementById('company-address').textContent = data.companyInfo.address;
+            document.getElementById('company-email').textContent = data.companyInfo.email;
+            // Client Info
+            document.getElementById('client-company').textContent = data.clientInfo.company;
+            document.getElementById('client-name').textContent = data.clientInfo.name;
+            document.getElementById('client-address').textContent = data.clientInfo.address;
+            document.getElementById('client-email').textContent = data.clientInfo.email;
+            // Invoice Details
+            document.getElementById('invoice-number').textContent = data.invoiceNumber;
+            document.getElementById('invoice-date').textContent = data.invoiceDate;
+            document.getElementById('due-date').textContent = data.dueDate;
+            document.getElementById('tax-rate').textContent = data.taxRate;
+            document.getElementById('notes').textContent = data.notes;
+            invoiceContainer.classList.toggle('is-paid', data.isPaid);
+            // Logo
+            if (data.logo) {
+                document.getElementById('logo-img').src = data.logo;
+                document.getElementById('logo-img').classList.remove('hidden');
+                document.getElementById('logo-placeholder').classList.add('hidden');
+            }
+            // Items
+            invoiceTableBody.innerHTML = '';
+            data.invoiceItems.forEach(createInvoiceRow);
+            calculateGrandTotal();
+        };
+
+        const saveState = () => {
+            const data = getState();
+            localStorage.setItem('currentInvoiceData', JSON.stringify(data));
+        };
+        const debouncedSaveState = debounce(saveState, 500);
+
+        const loadState = () => {
+            const savedData = localStorage.getItem('currentInvoiceData');
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    setState(data);
+                    return true;
+                } catch (e) {
+                    console.error("Failed to parse saved invoice data.", e);
+                    return false;
+                }
+            }
+            return false;
+        };
+
+        const exportData = () => {
+            const dataToExport = getState();
             const dataStr = JSON.stringify(dataToExport, null, 2);
             const blob = new Blob([dataStr], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `invoice-data-${Date.now()}.json`;
+            a.download = `invoice-${dataToExport.invoiceNumber}.json`;
             a.click();
             URL.revokeObjectURL(url);
         };
@@ -356,25 +420,8 @@
             reader.onload = (event) => {
                 try {
                     const data = JSON.parse(event.target.result);
-                    // Populate client info
-                    document.getElementById('client-company').textContent = data.clientInfo.company;
-                    document.getElementById('client-name').textContent = data.clientInfo.name;
-                    document.getElementById('client-address').textContent = data.clientInfo.address;
-                    document.getElementById('client-email').textContent = data.clientInfo.email;
-                    // Populate invoice items
-                    state.invoiceItems = data.invoiceItems;
-                    renderInvoiceItems();
-                    // Populate other fields
-                    document.getElementById('tax-rate').textContent = data.taxRate;
-                    document.getElementById('notes').textContent = data.notes;
-                    invoiceContainer.classList.toggle('is-paid', data.isPaid);
-                    // Populate logo
-                    if (data.logo) {
-                         document.getElementById('logo-img').src = data.logo;
-                         document.getElementById('logo-img').classList.remove('hidden');
-                         document.getElementById('logo-placeholder').classList.add('hidden');
-                    }
-                    calculateGrandTotal();
+                    setState(data);
+                    saveState(); // Save imported data as current draft
                 } catch (error) {
                     alert('Error parsing file. Please make sure it is a valid invoice data file.');
                     console.error(error);
@@ -383,6 +430,39 @@
             reader.readAsText(file);
         };
         
+        // --- New Invoice & Initialization ---
+        const startNewInvoice = (confirmFirst = true) => {
+            if (confirmFirst && !confirm('Are you sure you want to start a new invoice? Unsaved changes to the current draft will be lost.')) {
+                return;
+            }
+            
+            // Set defaults
+            const today = new Date();
+            const dueDate = new Date();
+            dueDate.setDate(today.getDate() + 30);
+
+            const defaultData = {
+                companyInfo: { name: 'Your Company', address: '123 Your Street, Your City, ST 12345', email: 'your.email@example.com' },
+                clientInfo: { company: 'Client Company Name', name: 'Client Name', address: '456 Client Address, Client City, ST 67890', email: 'client.email@example.com' },
+                invoiceNumber: generateNewInvoiceNumber(),
+                invoiceDate: today.toLocaleDateString(),
+                dueDate: dueDate.toLocaleDateString(),
+                invoiceItems: [{ desc: 'New Item', hours: 1, rate: 0 }],
+                taxRate: '10',
+                notes: 'Thank you for your business. Please make payment within 30 days.',
+                isPaid: false,
+                logo: ''
+            };
+            
+            setState(defaultData);
+            document.getElementById('logo-img').src = '';
+            document.getElementById('logo-img').classList.add('hidden');
+            document.getElementById('logo-placeholder').classList.remove('hidden');
+
+            saveState();
+        };
+
+
         // --- Logo Handling ---
         const handleLogoUpload = (e) => {
             const file = e.target.files[0];
@@ -392,6 +472,7 @@
                     document.getElementById('logo-img').src = event.target.result;
                     document.getElementById('logo-img').classList.remove('hidden');
                     document.getElementById('logo-placeholder').classList.add('hidden');
+                    debouncedSaveState();
                 };
                 reader.readAsDataURL(file);
             }
@@ -402,6 +483,7 @@
         document.getElementById('delete-client').addEventListener('click', deleteClient);
         clientSelect.addEventListener('change', selectClient);
         
+        document.getElementById('new-invoice-btn').addEventListener('click', () => startNewInvoice(true));
         document.getElementById('export-btn').addEventListener('click', exportData);
         document.getElementById('import-btn').addEventListener('click', () => {
             const input = document.createElement('input');
@@ -416,14 +498,8 @@
 
         document.getElementById('paid-btn').addEventListener('click', () => {
             invoiceContainer.classList.toggle('is-paid');
+            debouncedSaveState();
         });
-
-        invoiceTableBody.addEventListener('input', (e) => {
-            if (e.target.matches('.hours, .rate')) {
-                calculateGrandTotal();
-            }
-        });
-        taxRateEl.addEventListener('input', calculateGrandTotal);
 
         addRowButton.addEventListener('click', () => {
             createInvoiceRow({ desc: 'New Item', hours: 1, rate: 0 });
@@ -436,16 +512,20 @@
                 calculateGrandTotal();
             }
         });
-        
-        // --- Initialization ---
-        const today = new Date();
-        document.getElementById('invoice-date').textContent = today.toLocaleDateString();
-        const dueDate = new Date();
-        dueDate.setDate(today.getDate() + 30);
-        document.getElementById('due-date').textContent = dueDate.toLocaleDateString();
 
+        invoiceContainer.addEventListener('input', (e) => {
+            if (e.target.closest('#invoice-table') || e.target.matches('#tax-rate')) {
+                calculateGrandTotal();
+            } else {
+                 debouncedSaveState();
+            }
+        });
+
+        // --- Initialization ---
         loadClients();
-        renderInvoiceItems();
+        if (!loadState()) {
+             startNewInvoice(false); // If no state loaded, start a fresh invoice without confirmation
+        }
     });
     </script>
 </body>
